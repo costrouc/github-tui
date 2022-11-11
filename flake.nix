@@ -71,6 +71,11 @@
           pythonPackages.importlib-metadata
           pythonPackages.typing-extensions
           nanoid
+
+          # dev dependencies
+          pythonPackages.click
+          pythonPackages.aiohttp
+          pythonPackages.msgpack
         ];
       };
     in {
