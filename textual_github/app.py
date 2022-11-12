@@ -12,7 +12,8 @@ from textual.widgets import Footer, Header, Static, DataTable
 from textual_github.screens import (
     GithubIssueScreen,
     GithubRepositoriesScreen,
-    GithubProfileScreen
+    GithubProfileScreen,
+    GithubNotificationsScreen
 )
 
 
@@ -23,13 +24,15 @@ class GithubApp(App):
 
     SCREENS = {
         "repositories": GithubRepositoriesScreen(),
-        "profile": GithubProfileScreen()
+        "profile": GithubProfileScreen(),
+        "notifications": GithubNotificationsScreen(),
     }
 
     BINDINGS = [
         ("q", "quit", "Quit"),
         ("r", "push_screen('repositories')", "Repositories"),
         ("p", "push_screen('profile')", "Profile"),
+        ("n", "push_screen('notifications')", "Notifications"),
     ]
 
     def on_mount(self) -> None:

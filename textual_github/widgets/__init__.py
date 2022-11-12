@@ -1,3 +1,5 @@
+from textual_github.widgets.ui import SelectableDataTable
+
 from textual_github.widgets.github import (
     GithubProfile,
     GithubRepositories,
@@ -5,4 +7,5 @@ from textual_github.widgets.github import (
     GithubIssues,
     GithubIssue,
     GithubComment,
+    GithubNotifications,
 )

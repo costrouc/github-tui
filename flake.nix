@@ -47,14 +47,14 @@
 
       textual = pythonPackages.buildPythonPackage rec {
         pname = "textual";
-        version = "v0.4.0";
+        version = "unstable";
         format = "pyproject";
 
         src = pkgs.fetchFromGitHub {
           owner = "Textualize";
           repo = "textual";
-          rev = version;
-          sha256 = "sha256-Vn8++YdxdAGkaTgz+zqXOg6PJpshlWqWzYTsUIMYvCg=";
+          rev = "cb96da1a8e0a59dcf7d8343c49e747d54d80fff5";
+          sha256 = "sha256-3/auVhzOGl3saGXmixIjOrZa7LYZahYh/Kyw59M5i8w=";
         };
 
         preConfigure = ''
