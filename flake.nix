@@ -90,6 +90,8 @@
         ];
 
         shellHook = ''
+           alias github-tui="textual run --dev github_tui.app:GithubTUI"
+
            export GITHUB_API_TOKEN=$(password-store get www/github.com/costrouc token-personal)
         '';
       };
