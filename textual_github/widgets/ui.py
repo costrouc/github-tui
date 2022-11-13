@@ -2,7 +2,7 @@ from typing import Any
 
 from textual.message import Message, MessageTarget
 from textual import events, log
-from textual.widgets import DataTable
+from textual.widgets import DataTable, Input
 
 
 class SelectableDataTable(DataTable):
@@ -38,3 +38,18 @@ class SelectableDataTable(DataTable):
             self.key_left(event)
         elif event.key == "ctrl+f":
             self.key_right(event)
+
+
+class EmacsInput(Input):
+    def on_key(self, event: events.Key):
+        # adding emacs keybindings
+        if event.key == "ctrl+a":
+            self.action_home()
+        elif event.key == "ctrl+e":
+            self.action_end()
+        elif event.key == "ctrl+b":
+            self.action_cursor_left()
+        elif event.key == "ctrl+f":
+            self.action_cursor_right()
+        elif event.key == "ctrl+k":
+            self.action_delete_right()

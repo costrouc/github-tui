@@ -1,4 +1,4 @@
-from textual_github.widgets.ui import SelectableDataTable
+from textual_github.widgets.ui import SelectableDataTable, EmacsInput
 
 from textual_github.widgets.github import (
     GithubProfile,
