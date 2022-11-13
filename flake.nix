@@ -1,5 +1,5 @@
 {
-  description = "textual-github";
+  description = "github-tui";
 
   inputs = {
     nixpkgs = { url = "github:nixos/nixpkgs/nixpkgs-unstable"; };
@@ -83,6 +83,10 @@
         buildInputs = [
           textual
           pythonPackages.PyGithub
+
+          # development
+          pythonPackages.flake8
+          pythonPackages.black
         ];
 
         shellHook = ''

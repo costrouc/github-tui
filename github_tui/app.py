@@ -1,24 +1,14 @@
-import tempfile
-import subprocess
-import os
+from textual.app import App
 
-from github import Github
-from textual.app import App, ComposeResult
-from textual.reactive import reactive
-from textual import events
-from textual.containers import Container
-from textual.widgets import Footer, Header, Static, DataTable
-
-from textual_github.screens import (
-    GithubIssueScreen,
+from github_tui.screens import (
     GithubRepositoriesScreen,
     GithubProfileScreen,
-    GithubNotificationsScreen
+    GithubNotificationsScreen,
 )
 
 
-class GithubApp(App):
-    """A working 'desktop' github application."""
+class GithubTUI(App):
+    """Github TUI for issues, notifications, discussions, and PR management"""
 
     CSS_PATH = "styles.css"
 
@@ -36,4 +26,4 @@ class GithubApp(App):
     ]
 
     def on_mount(self) -> None:
-        self.push_screen('profile')
+        self.push_screen("repositories")

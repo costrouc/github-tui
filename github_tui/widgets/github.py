@@ -17,9 +17,9 @@ from textual.app import ComposeResult
 from textual.message import Message, MessageTarget
 from textual.widgets import Static
 from textual.widget import Widget
-from textual.containers import Vertical, Horizontal, Container
+from textual.containers import Vertical
 
-from textual_github.widgets.ui import SelectableDataTable
+from github_tui.widgets.ui import SelectableDataTable
 
 
 class GithubProfile(Widget):
@@ -28,14 +28,18 @@ class GithubProfile(Widget):
         self._user = user
 
     def compose(self) -> ComposeResult:
-        yield Static(Markdown(f"""
+        yield Static(
+            Markdown(
+                f"""
 # {self._user.name}
 
  - company {self._user.company}
  - email {self._user.email}
 
 ```{self._user.bio}```
-"""))
+"""
+            )
+        )
 
 
 class GithubRepositories(SelectableDataTable):
@@ -53,7 +57,7 @@ class GithubRepositories(SelectableDataTable):
                 repository.name,
                 (repository.description or "")[:32],
                 str(not repository.private),
-                str(repository.stargazers_count)
+                str(repository.stargazers_count),
             )
 
     def get_current_selected(self):
@@ -71,7 +75,9 @@ class GithubRepository(Widget):
         self._github_issues.issues = self._issues
 
         yield Vertical(
-            Static(Markdown(f"""
+            Static(
+                Markdown(
+                    f"""
 {self._repository.description}
 
  - stars :: {self._repository.stargazers_count}
@@ -82,7 +88,9 @@ class GithubRepository(Widget):
  - topics :: {self._repository.topics}
 
 ## Issues
-""")),
+"""
+                )
+            ),
             self._github_issues,
         )
 
@@ -95,15 +103,12 @@ class GithubComment(Static):
             self.sender = sender
             super().__init__(sender)
 
-    comment = reactive("Edit (click and press \"e\")", layout=True)
+    comment = reactive('Edit (click and press "e")', layout=True)
     editable = reactive(True)
     active = reactive(False)
 
     def __init__(
-        self,
-        issue_comment: IssueComment,
-        editable: bool = True,
-        *args, **kwargs
+        self, issue_comment: IssueComment, editable: bool = True, *args, **kwargs
     ):
         super().__init__(*args, **kwargs)
         self._issue_comment = issue_comment
@@ -167,7 +172,9 @@ class GithubIssue(Widget, can_focus=True):
 
     def compose(self) -> ComposeResult:
         self._github_comments.append(GithubComment(self._issue, classes="active"))
-        self._github_comments.extend([GithubComment(comment) for comment in self._comments])
+        self._github_comments.extend(
+            [GithubComment(comment) for comment in self._comments]
+        )
         self._vertical = Vertical(*self._github_comments)
         yield self._vertical
 
@@ -175,7 +182,7 @@ class GithubIssue(Widget, can_focus=True):
         self.get_selected_comment().active = True
 
     def get_selected_comment(self):
-        return self.query('GithubComment')[self._index]
+        return self.query("GithubComment")[self._index]
 
     def action_selection_down(self):
         self.get_selected_comment().active = False

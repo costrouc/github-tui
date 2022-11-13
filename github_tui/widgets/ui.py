@@ -1,16 +1,16 @@
 from typing import Any
 
 from textual.message import Message, MessageTarget
-from textual import events, log
+from textual import events
 from textual.widgets import DataTable, Input
 
 
 class SelectableDataTable(DataTable):
-    DEFAULT_CSS = '''
+    DEFAULT_CSS = """
     SelectableDataTable {
       height: auto;
     }
-    '''
+    """
 
     class Selected(Message):
         """Element selected message."""

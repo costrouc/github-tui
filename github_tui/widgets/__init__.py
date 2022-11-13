@@ -1,6 +1,6 @@
-from textual_github.widgets.ui import SelectableDataTable, EmacsInput
+from github_tui.widgets.ui import SelectableDataTable, EmacsInput # noqa
 
-from textual_github.widgets.github import (
+from github_tui.widgets.github import ( # noqa
     GithubProfile,
     GithubRepositories,
     GithubRepository,

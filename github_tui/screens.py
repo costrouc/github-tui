@@ -9,8 +9,16 @@ from textual.screen import Screen
 from textual.widgets import Footer, Header, Input
 from textual.app import ComposeResult
 
-from textual_github.widgets import GithubRepositories, GithubProfile, GithubIssue, GithubIssues, GithubComment, GithubRepository, GithubNotifications, SelectableDataTable, EmacsInput
-from textual_github.github import github_client
+from github_tui.widgets import (
+    GithubRepositories,
+    GithubProfile,
+    GithubIssue,
+    GithubRepository,
+    GithubNotifications,
+    SelectableDataTable,
+    EmacsInput,
+)
+from github_tui.github import github_client
 
 
 class GithubRepositoriesScreen(Screen):
@@ -30,11 +38,15 @@ class GithubRepositoriesScreen(Screen):
         yield self._github_repositories
         yield Footer()
 
-    def on_selectable_data_table_selected(self, message: SelectableDataTable.Selected) -> None:
+    def on_selectable_data_table_selected(
+        self, message: SelectableDataTable.Selected
+    ) -> None:
         self.app.push_screen(GithubRepositoryScreen(message.value))
 
     def on_input_submitted(self, message: Input.Submitted) -> None:
-        repositories = list(github_client.search_repositories(message.value)[:self.MAX_REPOSITORIES])
+        repositories = list(
+            github_client.search_repositories(message.value)[: self.MAX_REPOSITORIES]
+        )
         self._github_repositories.repositories = repositories
         self._github_repositories.focus()
 
@@ -64,7 +76,9 @@ class GithubRepositoryScreen(Screen):
         yield self._github_repository
         yield Footer()
 
-    def on_selectable_data_table_selected(self, message: SelectableDataTable.Selected) -> None:
+    def on_selectable_data_table_selected(
+        self, message: SelectableDataTable.Selected
+    ) -> None:
         self.app.push_screen(GithubIssueScreen(message.value))
 
     def action_goto(self) -> None:
@@ -83,7 +97,8 @@ class GithubRepositoryScreen(Screen):
 
         if issue_title and issue_body:
             issue = self._repository.create_issue(
-                issue_title, issue_body,
+                issue_title,
+                issue_body,
             )
             self.app.push_screen(GithubIssueScreen(issue))
 
@@ -149,18 +164,24 @@ class GithubIssueScreen(Screen):
     def on_mount(self) -> None:
         self._github_issue.focus()
         self.query_one("HeaderTitle").text = self._issue.title
-        self.query_one("HeaderTitle").sub_text = f"{self._issue.repository.full_name}#{self._issue.number}"
+        self.query_one(
+            "HeaderTitle"
+        ).sub_text = f"{self._issue.repository.full_name}#{self._issue.number}"
 
 
 class GithubNotificationsScreen(Screen):
     def compose(self) -> ComposeResult:
         self._github_notifications = GithubNotifications()
-        self._github_notifications.notifications = github_client.get_user().get_notifications()
+        self._github_notifications.notifications = (
+            github_client.get_user().get_notifications()
+        )
         yield Header()
         yield self._github_notifications
         yield Footer()
 
-    def on_selectable_data_table_selected(self, message: SelectableDataTable.Selected) -> None:
+    def on_selectable_data_table_selected(
+        self, message: SelectableDataTable.Selected
+    ) -> None:
         notification = message.value
         issue = notification.get_issue()
         self.app.push_screen(GithubIssueScreen(issue))
