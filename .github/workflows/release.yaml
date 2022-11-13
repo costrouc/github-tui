@@ -28,4 +28,4 @@ jobs:
           PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
           python -m build --sdist
-          twine upload -u $PYPI_USERNAME -p $PYPI_PASSWORD dist/*
+          twine upload --verbose -u $PYPI_USERNAME -p $PYPI_PASSWORD dist/*
