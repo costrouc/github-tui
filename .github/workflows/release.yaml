@@ -20,7 +20,7 @@ jobs:
 
       - name: Install Twine
         run: |
-          pip install twine
+          pip install build twine
 
       - name: Build and Distribute
         env:
