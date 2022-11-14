@@ -28,6 +28,21 @@ class SelectableDataTable(DataTable):
     async def key_enter(self, event: events.Key) -> None:
         await self.emit(self.Selected(self, self.get_current_selected()))
 
+    # PATCH -- remove when 0.4.0+ is released
+    def clear(self) -> None:
+        """Clear the table.
+        Args:
+            columns (bool, optional): Also clear the columns. Defaults to False.
+        """
+        self.row_count = 0
+        self._clear_caches()
+        self._y_offsets.clear()
+        self.data.clear()
+        self.rows.clear()
+        self._line_no = 0
+        self._require_update_dimensions = True
+        self.refresh()
+
     def on_key(self, event: events.Key):
         # adding emacs keybindings
         if event.key == "ctrl+n":
